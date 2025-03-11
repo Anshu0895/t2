@@ -34,6 +34,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
 
+console.log("Loaded settings:", settings);
+
 // DB configuration
 var { Pool } = require('pg');
 var pool = new Pool({
