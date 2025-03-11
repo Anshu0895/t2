@@ -1,3 +1,36 @@
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: notejam-app
+# spec:
+#   replicas: 3
+#   selector:
+#     matchLabels:
+#       app: notejam-app
+#   template:
+#     metadata:
+#       labels:
+#         app: notejam-app
+#     spec:
+#       containers:
+#       - name: notejam-app
+#         image: anshu0895/notejam-app:latest
+#         ports:
+#           - containerPort: 4000
+#         env:
+#           - name: NODE_ENV
+#             value: "production"
+#           - name: DB_HOST
+#             value: "notejam-db"
+#           - name: DB_USER
+#             value: "anshu"
+#           - name: DB_PASSWORD
+#             value: "anshu"
+#           - name: DB_NAME
+#             value: "notejam"
+#           - name: DB_PORT
+#             value: "5432"
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -19,14 +52,32 @@ spec:
           - containerPort: 4000
         env:
           - name: NODE_ENV
-            value: "production"
+            valueFrom:
+              configMapKeyRef:
+                name: notejam-config
+                key: NODE_ENV
           - name: DB_HOST
-            value: "notejam-db"
+            valueFrom:
+              configMapKeyRef:
+                name: notejam-config
+                key: DB_HOST
           - name: DB_USER
-            value: "anshu"
+            valueFrom:
+              secretKeyRef:
+                name: notejam-secret
+                key: DB_USER
           - name: DB_PASSWORD
-            value: "anshu"
+            valueFrom:
+              secretKeyRef:
+                name: notejam-secret
+                key: DB_PASSWORD
           - name: DB_NAME
-            value: "notejam"
+            valueFrom:
+              secretKeyRef:
+                name: notejam-secret
+                key: DB_NAME
           - name: DB_PORT
-            value: "5432"
+            valueFrom:
+              secretKeyRef:
+                name: notejam-secret
+                key: DB_PORT
