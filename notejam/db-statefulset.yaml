@@ -13,6 +13,11 @@ spec:
       labels:
         app: notejam-db
     spec:
+    # volume configuration for the pod
+      volumes:
+        - name: postgres-storage
+          persistentVolumeClaim:
+            claimName: postgres-pvc
       containers:
       - name: notejam-db
         image: anshu0895/notejam-db:latest
