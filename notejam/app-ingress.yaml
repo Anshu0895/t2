@@ -4,6 +4,9 @@ metadata:
   name: notejam-ingress
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/affinity: cookie
+    nginx.ingress.kubernetes.io/session-cookie-name: notejam-session
+    nginx.ingress.kubernetes.io/session-cookie-hash: sha1
 spec:
   rules:
   - host: notejam.local
